@@ -1,0 +1,5 @@
+nome = input("Come ti chiami? ")
+cognome = input("Quale e' il tuo cognome? ")
+eta = input("Quanti anni hai? ")
+citta = input("Dove abiti?")
+studio = input("Che cosa studi?")
