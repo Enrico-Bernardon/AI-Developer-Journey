@@ -3,13 +3,13 @@ spese = []
 while True:
 
     descrizione = input("Inserisci una spesa (scrivi fine per terminare): ")
-    costo = input("Inserisci il costo della spesa (scrivi fine per terminare): " )
 
-     
     if descrizione.lower() == "fine":
-        
+   
+         
          break
-     
+    costo = float(input("Inserisci il costo della spesa: "))
+
     spesa = {
     "descrizione": descrizione,
     "importo": costo
@@ -21,6 +21,12 @@ while True:
 
     spese.append(spesa)
     
+    
+    
+    
+    
+    totale_spese = 0
+
 
  
 totale = len(spese) 
@@ -34,7 +40,6 @@ else:
 
     for spesa in spese:
       print(f" -{spesa['descrizione']} - {spesa['importo']}")
-     
-    
+      totale_spese = totale_spese + spesa['importo']
 
-   
+print(totale_spese)
