@@ -1,6 +1,30 @@
-file = open("spese.txt", "w")
+file = open("spese.txt", "r")
 spese = []
 
+contenuto = file.read()
+
+righe = contenuto.split("\n")
+
+for riga in righe:
+
+    if riga == "":
+        continue
+
+    parti = riga.split("-")
+
+    descrizione = parti[0]
+
+    importo = float(parti[1])
+
+    spesa = {
+        "descrizione": descrizione,
+        "importo": importo
+    }
+
+    spese.append(spesa)
+
+file.close()
+file = open("spese.txt", "a")
 while True:
 
     descrizione = input("Inserisci una spesa (scrivi fine per terminare): ")
@@ -17,6 +41,8 @@ while True:
 
     spese.append(spesa)
 
+    file.write(f"{spesa['descrizione']} - {spesa['importo']:.2f}\n")
+
 
 totale_spese = 0
 totale = len(spese)
@@ -32,7 +58,6 @@ else:
     # Calcolo totale e salvataggio nel file
     for spesa in spese:
         print(f" -{spesa['descrizione']} - {spesa['importo']:.2f} €")
-        file.write(f"{spesa['descrizione']} - {spesa['importo']:.2f}\n")
         totale_spese = totale_spese + spesa["importo"]
 
     # Calcolo massimo
@@ -59,4 +84,5 @@ else:
     print(f"Spesa più alta: {massimo:.2f} €")
     print(f"Spesa più bassa: {minimo:.2f} €")
 
-    file.close()
+
+file.close()
