@@ -1,37 +1,67 @@
-file = open("spese.txt", "r")
-spese = []
+#Funzione per il Totale
+def calcola_totale(spese):
+    totale = 0
 
-contenuto = file.read()
+    for spesa in spese:
+        totale = totale + spesa["importo"]
 
-righe = contenuto.split("\n")
+    return totale
+#Funzione per la Media
+def calcola_media(spese):
+    totale = calcola_totale(spese)
+    return totale / len(spese)
+#Funzione per trovare il Massimo
+def trova_massimo(spese):
+    massimo = spese[0]["importo"]
 
-for riga in righe:
+    for spesa in spese:
+        if spesa["importo"] > massimo:
+            massimo = spesa["importo"]
 
-    if riga == "":
-        continue
+    return massimo
+#Funzione per trovare il Minimo
+def trova_minimo(spese):
+    minimo = spese[0]["importo"]
 
-    parti = riga.split("-")
+    for spesa in spese:
+        if spesa["importo"] < minimo:
+            minimo = spesa["importo"]
 
-    descrizione = parti[0]
+    return minimo
+#Funzione per Caricare la Spesa
+def carica_spese():
+    spese = []
 
-    importo = float(parti[1])
+    try:
+        file = open("spese.txt", "r")
 
-    spesa = {
-        "descrizione": descrizione,
-        "importo": importo
-    }
+        contenuto = file.read()
+        righe = contenuto.split("\n")
 
-    spese.append(spesa)
+        for riga in righe:
+            if riga == "":
+                continue
 
-file.close()
-file = open("spese.txt", "a")
-while True:
+            parti = riga.split("-")
+            descrizione = parti[0]
+            importo = float(parti[1])
 
-    descrizione = input("Inserisci una spesa (scrivi fine per terminare): ")
+            spesa = {
+                "descrizione": descrizione,
+                "importo": importo
+            }
 
-    if descrizione.lower() == "fine":
-        break
+            spese.append(spesa)
 
+        file.close()
+
+    except FileNotFoundError:
+        file = open("spese.txt", "w")
+        file.close()
+
+    return spese
+#Funzione che aggiunge una singola Spesa
+def aggiungi_spesa(spese, file, descrizione):
     costo = float(input("Inserisci il costo della spesa: "))
 
     spesa = {
@@ -40,42 +70,45 @@ while True:
     }
 
     spese.append(spesa)
-
     file.write(f"{spesa['descrizione']} - {spesa['importo']:.2f}\n")
+spese = carica_spese()
 
+file = open("spese.txt", "a")
 
-totale_spese = 0
-totale = len(spese)
+while True:
 
-if totale == 0:
+    descrizione = input("Inserisci una spesa (scrivi fine per terminare): ")
+
+    if descrizione.lower() == "fine":
+        break
+
+    aggiungi_spesa(spese, file, descrizione)
+
+numero_spese = len(spese)
+
+if numero_spese == 0:
     print("Non hai aggiunto nessun elemento")
 
 else:
     print()
-    print(f"Hai inserito {totale} spese.")
+    print(f"Hai inserito {numero_spese} spese.")
     print("Hai inserito:")
 
-    # Calcolo totale e salvataggio nel file
     for spesa in spese:
         print(f" -{spesa['descrizione']} - {spesa['importo']:.2f} €")
-        totale_spese = totale_spese + spesa["importo"]
 
-    # Calcolo massimo
-    massimo = spese[0]["importo"]
-
-    for spesa in spese:
-        if spesa["importo"] > massimo:
-            massimo = spesa["importo"]
-
-    # Calcolo minimo
-    minimo = spese[0]["importo"]
-
-    for spesa in spese:
-        if spesa["importo"] < minimo:
-            minimo = spesa["importo"]
+    # Calcolo totale 
+    totale_spese = calcola_totale(spese)
 
     # Calcolo media
-    media = totale_spese / totale
+    media = calcola_media(spese)
+
+    # Calcolo massimo
+    massimo = trova_massimo(spese)
+
+    # Calcolo minimo
+    minimo = trova_minimo(spese)
+
 
     # Risultati
     print()
