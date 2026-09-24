@@ -61,7 +61,8 @@ def carica_spese():
 
     return spese
 #Funzione che aggiunge una singola Spesa
-def aggiungi_spesa(spese, file, descrizione):
+def aggiungi_spesa(spese, file):
+    descrizione = input("Inserisci la descrizione della spesa: ")
     costo = float(input("Inserisci il costo della spesa: "))
 
     spesa = {
@@ -71,51 +72,51 @@ def aggiungi_spesa(spese, file, descrizione):
 
     spese.append(spesa)
     file.write(f"{spesa['descrizione']} - {spesa['importo']:.2f}\n")
+#Funzione che mostra Spese
+def mostra_spese(spese):
+    for spesa in spese:
+        print(f" -{spesa['descrizione']} - {spesa['importo']:.2f} €")
+
+def mostra_statistiche(spese):
+    numero_spese = len(spese)
+
+    if numero_spese == 0:
+        print("Non hai aggiunto nessun elemento")
+
+    else:
+        print(f"Hai inserito {numero_spese} spese.")
+
+        totale_spese = calcola_totale(spese)
+        media = calcola_media(spese)
+        massimo = trova_massimo(spese)
+        minimo = trova_minimo(spese)
+        print(f"Totale: {totale_spese:.2f} €")
+        print(f"Media: {media:.2f} €")
+        print(f"Spesa più alta: {massimo:.2f} €")
+        print(f"Spesa più bassa: {minimo:.2f} €")
+
 spese = carica_spese()
 
 file = open("spese.txt", "a")
 
 while True:
+    print("===== EXPENSE TRACKER =====")
+    print("1. Aggiungi spesa")
+    print("2. Visualizza spese")
+    print("3. Mostra statistiche")
+    print("4. Esci")
 
-    descrizione = input("Inserisci una spesa (scrivi fine per terminare): ")
+    scelta = input("Scegli un'opzione: ")
 
-    if descrizione.lower() == "fine":
+    if scelta == "1":
+        aggiungi_spesa(spese, file)
+
+    elif scelta == "2":
+        mostra_spese(spese)
+
+    elif scelta == "3":
+        mostra_statistiche(spese)
+
+    elif scelta == "4":
         break
-
-    aggiungi_spesa(spese, file, descrizione)
-
-numero_spese = len(spese)
-
-if numero_spese == 0:
-    print("Non hai aggiunto nessun elemento")
-
-else:
-    print()
-    print(f"Hai inserito {numero_spese} spese.")
-    print("Hai inserito:")
-
-    for spesa in spese:
-        print(f" -{spesa['descrizione']} - {spesa['importo']:.2f} €")
-
-    # Calcolo totale 
-    totale_spese = calcola_totale(spese)
-
-    # Calcolo media
-    media = calcola_media(spese)
-
-    # Calcolo massimo
-    massimo = trova_massimo(spese)
-
-    # Calcolo minimo
-    minimo = trova_minimo(spese)
-
-
-    # Risultati
-    print()
-    print(f"Totale: {totale_spese:.2f} €")
-    print(f"Media: {media:.2f} €")
-    print(f"Spesa più alta: {massimo:.2f} €")
-    print(f"Spesa più bassa: {minimo:.2f} €")
-
-
 file.close()
