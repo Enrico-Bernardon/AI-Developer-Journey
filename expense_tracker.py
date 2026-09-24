@@ -76,7 +76,7 @@ def aggiungi_spesa(spese, file):
 def mostra_spese(spese):
     for spesa in spese:
         print(f" -{spesa['descrizione']} - {spesa['importo']:.2f} €")
-
+#Funzione che mostra i Risultati tutti a schermo
 def mostra_statistiche(spese):
     numero_spese = len(spese)
 
@@ -98,7 +98,7 @@ def mostra_statistiche(spese):
 spese = carica_spese()
 
 file = open("spese.txt", "a")
-
+#Ciclo per creare un menu interagibile
 while True:
     print("===== EXPENSE TRACKER =====")
     print("1. Aggiungi spesa")
@@ -119,4 +119,6 @@ while True:
 
     elif scelta == "4":
         break
+
+
 file.close()
