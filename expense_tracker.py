@@ -60,10 +60,28 @@ def carica_spese():
         file.close()
 
     return spese
-#Funzione che aggiunge una singola Spesa
 def aggiungi_spesa(spese, file):
-    descrizione = input("Inserisci la descrizione della spesa: ")
-    costo = float(input("Inserisci il costo della spesa: "))
+    while True:
+        descrizione = input("Inserisci la descrizione della spesa: ")
+
+        descrizione = descrizione.strip()
+
+        if descrizione == "":
+            print("La descrizione non può essere vuota.")
+        else:
+            break
+
+    while True:
+        try:
+            costo = float(input("Inserisci il costo della spesa: "))
+
+            if costo < 0:
+                print("Il costo deve essere maggiore di 0.")
+            else:
+                break
+
+        except ValueError:
+            print("Inserisci un numero valido.")
 
     spesa = {
         "descrizione": descrizione,
@@ -120,5 +138,11 @@ while True:
     elif scelta == "4":
         break
 
+    else:
+        print("Scelta non valida. Inserisci un'opzione da 1 a 4.")
 
 file.close()
+
+
+
+
