@@ -35,35 +35,34 @@ def carica_spese():
     spese = []
 
     try:
-        file = open("spese.txt", "r")
+        with open("spese.txt", "r") as file:
+            contenuto = file.read()
+            righe = contenuto.split("\n")
 
-        contenuto = file.read()
-        righe = contenuto.split("\n")
+            for riga in righe:
+                if riga == "":
+                    continue
 
-        for riga in righe:
-            if riga == "":
-                continue
+                parti = riga.split("-")
+                descrizione = parti[0]
+                importo = float(parti[1])
 
-            parti = riga.split("-")
-            descrizione = parti[0]
-            importo = float(parti[1])
+                spesa = {
+                    "descrizione": descrizione,
+                    "importo": importo
+                }
 
-            spesa = {
-                "descrizione": descrizione,
-                "importo": importo
-            }
-
-            spese.append(spesa)
-
-        file.close()
+                spese.append(spesa)
 
     except FileNotFoundError:
-        file = open("spese.txt", "w")
-        file.close()
+     with open("spese.txt", "w"):
+        pass
 
     return spese
+
+
 #Funzione per aggiungere la spesa
-def aggiungi_spesa(spese, file):
+def aggiungi_spesa(spese):
     #Ciclo per vedere se la spesa è Vuota 
     while True:
         descrizione = input("Inserisci la descrizione della spesa: ")
@@ -93,7 +92,8 @@ def aggiungi_spesa(spese, file):
     }
 
     spese.append(spesa)
-    file.write(f"{spesa['descrizione']} - {spesa['importo']:.2f}\n")
+    with open("spese.txt", "a") as file:
+        file.write(f"{spesa['descrizione']} - {spesa['importo']:.2f}\n")
 
 #Funzione per mostrare la spesa
 def mostra_spese(spese):

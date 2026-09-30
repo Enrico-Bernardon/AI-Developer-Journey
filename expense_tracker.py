@@ -12,7 +12,7 @@ from funzioni_spese import (
 
 spese = carica_spese()
 
-file = open("spese.txt", "a")
+
 
 #Ciclo per creare un menu interagibile
 while True:
@@ -25,7 +25,7 @@ while True:
     scelta = input("Scegli un'opzione: ")
 
     if scelta == "1":
-        aggiungi_spesa(spese, file)
+        aggiungi_spesa(spese)
 
     elif scelta == "2":
         mostra_spese(spese)
@@ -39,7 +39,7 @@ while True:
     else:
         print("Scelta non valida. Inserisci un'opzione da 1 a 4.")
 
-file.close()
+
 
 
 
